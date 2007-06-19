@@ -1,2 +1,9 @@
 ## Interface: 20100
+## Title: Chippu
+## Author: Haste
+## Version: 1.0
+## X-eMail: troeks@gmail.com
+## X-Website: http://fuxsake.net/
+## Notes: Ah!1 Tooltip... item.. border... color... yes! YES!!1
+
 tips.lua
