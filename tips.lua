@@ -29,44 +29,36 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------]]
 -- We like locals
-local tip = GameTooltip
-
 local select = select
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 
---[[ Za Warudo!
---		GameTooltip
---]]
-local gthook = CreateFrame("Frame", nil, tip)
-local gtOnShow = function()
-	local name, item = tip:GetItem()
-
-	if(item) then
-		local quality = select(3, GetItemInfo(item))
-		local r, g, b = GetItemQualityColor(quality)
-
-		tip:SetBackdropBorderColor(r, g, b)
-		tip:SetBackdropColor(0, 0, 0, 1)
-	end
-end
-gthook:SetScript("OnShow", gtOnShow)
-
---[[ Za Warudo!
---		ItemRefTooltip
+--[[
+--	Za Warudo!
 --]]
 local origs = {
+	GameTooltip = GameTooltip:GetScript"OnTooltipSetItem",
 	ItemRefTooltip = ItemRefTooltip:GetScript"OnTooltipSetItem",
 	ShoppingTooltip1 = ShoppingTooltip1:GetScript"OnTooltipSetItem",
 	ShoppingTooltip2 = ShoppingTooltip2:GetScript"OnTooltipSetItem",
 }
+
+local cache = setmetatable({},{
+	__index = function(self, k)
+		local quality = select(3, GetItemInfo(k))
+		self[k] = quality
+
+		return quality
+	end,
+})
+
 local OnTooltipSetItem = function(self, ...)
 	local orig = origs[self:GetName()]
 	if(orig) then orig(self, ...) end
 
 	local name, item = self:GetItem()
 	if(item) then
-		local quality = select(3, GetItemInfo(item))
+		local quality = cache[item]
 		local r, g, b = GetItemQualityColor(quality)
 
 		self:SetBackdropBorderColor(r, g, b)
@@ -74,6 +66,7 @@ local OnTooltipSetItem = function(self, ...)
 	end
 end
 
+GameTooltip:SetScript("OnTooltipSetItem", OnTooltipSetItem)
 ItemRefTooltip:SetScript("OnTooltipSetItem", OnTooltipSetItem)
 ShoppingTooltip1:SetScript("OnTooltipSetItem", OnTooltipSetItem)
 ShoppingTooltip2:SetScript("OnTooltipSetItem", OnTooltipSetItem)
