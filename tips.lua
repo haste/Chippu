@@ -33,32 +33,19 @@ local select = select
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 
+local origs = {}
+local tips = {"GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2"}
+
 --[[
 --	Za Warudo!
 --]]
-local origs = {
-	GameTooltip = GameTooltip:GetScript"OnTooltipSetItem",
-	ItemRefTooltip = ItemRefTooltip:GetScript"OnTooltipSetItem",
-	ShoppingTooltip1 = ShoppingTooltip1:GetScript"OnTooltipSetItem",
-	ShoppingTooltip2 = ShoppingTooltip2:GetScript"OnTooltipSetItem",
-}
-
-local cache = setmetatable({},{
-	__index = function(self, k)
-		local quality = select(3, GetItemInfo(k))
-		self[k] = quality
-
-		return quality
-	end,
-})
-
 local OnTooltipSetItem = function(self, ...)
-	local orig = origs[self:GetName()]
+	local orig = origs[self]
 	if(orig) then orig(self, ...) end
 
 	local name, item = self:GetItem()
 	if(item) then
-		local quality = cache[item]
+		local quality = select(3, GetItemInfo(item))
 		local r, g, b = GetItemQualityColor(quality)
 
 		self:SetBackdropBorderColor(r, g, b)
@@ -66,7 +53,9 @@ local OnTooltipSetItem = function(self, ...)
 	end
 end
 
-GameTooltip:SetScript("OnTooltipSetItem", OnTooltipSetItem)
-ItemRefTooltip:SetScript("OnTooltipSetItem", OnTooltipSetItem)
-ShoppingTooltip1:SetScript("OnTooltipSetItem", OnTooltipSetItem)
-ShoppingTooltip2:SetScript("OnTooltipSetItem", OnTooltipSetItem)
+for _, v in ipairs(tips) do
+	local obj = _G[v]
+
+	origs[obj] = obj:GetScript"OnTooltipSetItem"
+	obj:SetScript("OnTooltipSetItem", OnTooltipSetItem)
+end
