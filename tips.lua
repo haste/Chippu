@@ -34,7 +34,7 @@ local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 
 local origs = {}
-local tips = {"GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2"}
+local tips = {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2}
 
 --[[
 --	Za Warudo!
@@ -53,9 +53,7 @@ local OnTooltipSetItem = function(self, ...)
 	end
 end
 
-for _, v in ipairs(tips) do
-	local obj = _G[v]
-
+for _, obj in ipairs(tips) do
 	origs[obj] = obj:GetScript"OnTooltipSetItem"
 	obj:SetScript("OnTooltipSetItem", OnTooltipSetItem)
 end
