@@ -44,7 +44,7 @@ local OnTooltipSetItem = function(self, ...)
 	if(orig) then orig(self, ...) end
 
 	local name, item = self:GetItem()
-	if(item) then
+	if(name and item) then
 		local quality = select(3, GetItemInfo(item))
 		local r, g, b = GetItemQualityColor(quality)
 
