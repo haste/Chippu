@@ -44,12 +44,14 @@ local OnTooltipSetItem = function(self, ...)
 	if(orig) then orig(self, ...) end
 
 	local name, item = self:GetItem()
-	if(name and item) then
+	if(item) then
 		local quality = select(3, GetItemInfo(item))
-		local r, g, b = GetItemQualityColor(quality)
+		if(quality) then
+			local r, g, b = GetItemQualityColor(quality)
 
-		self:SetBackdropBorderColor(r, g, b)
-		self:SetBackdropColor(0, 0, 0, 1)
+			self:SetBackdropBorderColor(r, g, b)
+			self:SetBackdropColor(0, 0, 0, 1)
+		end
 	end
 end
 
