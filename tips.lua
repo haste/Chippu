@@ -1,8 +1,6 @@
 local GetItemInfo = GetItemInfo
 local GetItemQualityColor = GetItemQualityColor
 
-local tips = {GameTooltip, ItemRefTooltip, ShoppingTooltip1, ShoppingTooltip2}
-
 local OnTooltipSetItem = function(self, ...)
 	local name, item = self:GetItem()
 	if(item) then
@@ -16,6 +14,12 @@ local OnTooltipSetItem = function(self, ...)
 	end
 end
 
-for _, obj in ipairs(tips) do
+for _, obj in next, {
+	GameTooltip,
+	ShoppingTooltip1,
+	ShoppingTooltip2,
+	ShoppingTooltip3,
+	ItemRefTooltip,
+} do
 	obj:HookScript("OnTooltipSetItem", OnTooltipSetItem)
 end
