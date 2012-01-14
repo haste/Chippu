@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 40300
 ## Title: Chippu
 ## Author: Haste
 ## Version: 1.3
