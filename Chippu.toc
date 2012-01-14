@@ -1,7 +1,7 @@
 ## Interface: 40300
 ## Title: Chippu
 ## Author: Haste
-## Version: 1.3
+## Version: 1.4
 ## X-eMail: troeks@gmail.com
 ## X-Website: http://www.wowinterface.com/downloads/info7294-Chippu.html
 ## Notes: Tooltip borders colored by item quality.
