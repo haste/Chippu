@@ -3,7 +3,7 @@
 ## Author: Haste
 ## Version: 1.3
 ## X-eMail: troeks@gmail.com
-## X-Website: http://http://ixo.no/git/Chippu.git/
+## X-Website: http://www.wowinterface.com/downloads/info7294-Chippu.html
 ## Notes: Tooltip borders colored by item quality.
 
 tips.lua
